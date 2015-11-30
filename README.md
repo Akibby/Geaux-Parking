@@ -1,2 +1,2 @@
 # Geaux-Parking
-Project for class.
+Project for CS class.
