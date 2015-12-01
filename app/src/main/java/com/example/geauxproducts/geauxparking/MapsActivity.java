@@ -1,22 +1,31 @@
 package com.example.geauxproducts.geauxparking;
 
+import android.location.LocationManager;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.android.support.
 
 public class MapsActivity extends FragmentActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-
+    private GoogleApiClient mGoogleApiClient;
+    public static final String TAG = MapsActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
     }
 
     @Override
@@ -59,7 +68,17 @@ public class MapsActivity extends FragmentActivity {
      * <p/>
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
+
     private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(30.412984, -91.180011) , 10.0f));
+        /**
+         * mMap.addMarker(new MarkerOptions().position(new LatLng(30.412984, -91.180011)).title("Marker"));
+         */
+
+    }
+    public void dropPin() {
+        double currentLatitude = location.getLatitude();
+        double currentLongitude = location.getLongitude();
+        mMap.addMarker(new MarkerOptions().position(new LatLng(currentLatitude, currentLongitude));
     }
 }
