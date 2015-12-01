@@ -1,11 +1,16 @@
 package com.example.geauxproducts.geauxparking;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.*;
 import android.location.LocationListener;
+import android.Manifest.*;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -23,11 +28,13 @@ public class MapsActivity extends FragmentActivity {
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
     }
+    private static final int MY_PERMISSION_ACCESS_COARSE_LOCATION = 11;
+    private static final int MY_PERMISSION_ACCESS_FINE_LOCATION = 12;
 
-    LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-    Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-    double longitude = location.getLongitude();
-    double latitude = location.getLatitude();
+//    LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+//    Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//    double longitude = location.getLongitude();
+//    double latitude = location.getLatitude();
 
     @Override
     protected void onResume() {
@@ -77,7 +84,32 @@ public class MapsActivity extends FragmentActivity {
          */
 
     }
+
     public void dropPin() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(getLat(), getLong())));
+    }
+
+    public double getLat()  {
+        double latitude = 0;
+        if (checkSelfPermission(permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            latitude = location.getLatitude();
+            return latitude;
+        }
+        return latitude;
+    }
+
+    public double getLong()  {
+        double longitude = 0;
+        if (checkSelfPermission(permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            longitude = location.getLongitude();
+            return longitude;
+        }
+        return longitude;
     }
 }
