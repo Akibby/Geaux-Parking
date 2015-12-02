@@ -5,7 +5,8 @@
     <string name="zone2">Greek</string>
     <string name="zone3">Resident</string>
     <string name="zone4">Law</string>
-    <string name="visitorParking">Visitor</string>
-    <string name="allZoneParking">All</string>
-    <string name="current_location">CurrentLocation</string>
+    <string name="visitorParking">Visitor Parking</string>
+    <string name="allZoneParking">All Zones</string>
+    <string name="current_location">Current Location</string>
+    <string name="removeAllPins">Remove Pins</string>
 </resources>
