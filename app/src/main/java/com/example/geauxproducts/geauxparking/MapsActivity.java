@@ -6,11 +6,8 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v4.content.*;
-import android.location.LocationListener;
 import android.Manifest.*;
 import android.view.View;
 
@@ -90,7 +87,11 @@ public class MapsActivity extends FragmentActivity {
     }
 
     public void dropPin(View view) {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(getLat(), getLong())));
+        double lat = getLat();
+        double lon = getLong();
+        mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lon), 15.0f));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lon), 15.0f));
     }
 
     public double getLat()  {
@@ -103,5 +104,8 @@ public class MapsActivity extends FragmentActivity {
         LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         return location.getLongitude();
+    }
+    public void removePin(View view){
+        mMap.clear();
     }
 }
