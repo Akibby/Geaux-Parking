@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.support.v4.content.*;
 import android.location.LocationListener;
 import android.Manifest.*;
+import android.view.View;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -20,21 +22,21 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends FragmentActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+    
     public static final String TAG = MapsActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (checkSelfPermission(permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+
+        }
+        else{
+            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_ASK_PERMISSIONS);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
     }
-    private static final int MY_PERMISSION_ACCESS_COARSE_LOCATION = 11;
-    private static final int MY_PERMISSION_ACCESS_FINE_LOCATION = 12;
-
-//    LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-//    Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//    double longitude = location.getLongitude();
-//    double latitude = location.getLatitude();
 
     @Override
     protected void onResume() {
@@ -78,38 +80,28 @@ public class MapsActivity extends FragmentActivity {
      */
 
     private void setUpMap() {
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(30.412984, -91.180011) , 10.0f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(30.412984, -91.180011), 15.0f));
         /**
          * mMap.addMarker(new MarkerOptions().position(new LatLng(30.412984, -91.180011)).title("Marker"));
          */
 
     }
 
-    public void dropPin() {
+    public void dropPin(View view) {
         mMap.addMarker(new MarkerOptions().position(new LatLng(getLat(), getLong())));
     }
 
     public double getLat()  {
-        double latitude = 0;
-        if (checkSelfPermission(permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                || checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            latitude = location.getLatitude();
-            return latitude;
-        }
+        LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        double latitude = location.getLatitude();
         return latitude;
     }
 
     public double getLong()  {
-        double longitude = 0;
-        if (checkSelfPermission(permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                || checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            longitude = location.getLongitude();
-            return longitude;
-        }
+        LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        double longitude = location.getLongitude();
         return longitude;
     }
 }
