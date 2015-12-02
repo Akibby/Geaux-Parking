@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Geaux Parking</string>
-    <string name="toggle_turn_on">Turn On</string>
-    <string name="toggle_turn_off">Turn Off</string>
-    <string name="title_activity_maps">Geaux Parking</string>
+    <string name="save_location_text">Save</string>
+    <string name="normal">Normal</string>
+    <string name="satellite">Satellite</string>
+    <string name="terrain">Terrain</string>
+    <string name="hybrid">Hybrid</string>
+    <string name="none">None</string>
+    <string name="current_location">CurrentLocation</string>
 </resources>
