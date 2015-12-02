@@ -1,18 +1,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/mapTypeNormal"
-        android:title="@string/normal" />
+        android:id="@+id/zone1"
+        android:title="@string/zone1" />
     <item
-        android:id="@+id/mapTypeSatellite"
-        android:title="@string/satellite" />
+        android:id="@+id/zone2"
+        android:title="@string/zone2" />
     <item
-        android:id="@+id/mapTypeTerrain"
-        android:title="@string/terrain" />
+        android:id="@+id/zone3"
+        android:title="@string/zone3" />
     <item
-        android:id="@+id/mapTypeHybrid"
-        android:title="@string/hybrid" />
+        android:id="@+id/zone4"
+        android:title="@string/zone4" />
     <item
-        android:id="@+id/mapTypeNone"
-        android:title="@string/none" />
+        android:id="@+id/visitorParking"
+        android:title="@string/visitorParking" />
+    <item
+        android:id="@+id/allZoneParking"
+        android:title="@string/allZoneParking" />
 </menu>
