@@ -1,9 +1,11 @@
 package com.example.geauxproducts.geauxparking;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.pm.PackageManager;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -41,11 +44,20 @@ public class MainActivity extends AppCompatActivity
     private static final int ERROR_DIALOG_REQUEST = 9001;
     private GoogleApiClient mLocationClient;
     private Marker marker;
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
+
+        if(Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+            } else {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_ASK_PERMISSIONS);
+            }
+        }
 
         if (servicesOK()) {
             setContentView(R.layout.activity_map);
