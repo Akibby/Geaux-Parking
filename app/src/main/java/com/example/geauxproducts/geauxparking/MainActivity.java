@@ -144,19 +144,22 @@ public class MainActivity extends AppCompatActivity
 
         //Add menu handling code
         switch (id) {
-            case R.id.mapTypeNone:
+            case R.id.zone1:
                 mMap.setMapType(GoogleMap.MAP_TYPE_NONE);
                 break;
-            case R.id.mapTypeNormal:
+            case R.id.zone2:
                 mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 break;
-            case R.id.mapTypeSatellite:
+            case R.id.zone3:
                 mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
                 break;
-            case R.id.mapTypeTerrain:
+            case R.id.zone4:
                 mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
                 break;
-            case R.id.mapTypeHybrid:
+            case R.id.visitorParking:
+                mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                break;
+            case R.id.allZoneParking:
                 mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                 break;
 

@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">Geaux Parking</string>
     <string name="save_location_text">Save</string>
-    <string name="normal">Normal</string>
-    <string name="satellite">Satellite</string>
-    <string name="terrain">Terrain</string>
-    <string name="hybrid">Hybrid</string>
-    <string name="none">None</string>
+    <string name="zone1">Commuter</string>
+    <string name="zone2">Greek</string>
+    <string name="zone3">Resident</string>
+    <string name="zone4">Law</string>
+    <string name="visitorParking">Visitor</string>
+    <string name="allZoneParking">All</string>
     <string name="current_location">CurrentLocation</string>
 </resources>
