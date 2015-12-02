@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -23,15 +24,16 @@ public class MapsActivity extends FragmentActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
-    
+
     public static final String TAG = MapsActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (checkSelfPermission(permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+        if(Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
-        }
-        else{
-            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_ASK_PERMISSIONS);
+            } else {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_ASK_PERMISSIONS);
+            }
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
@@ -94,14 +96,12 @@ public class MapsActivity extends FragmentActivity {
     public double getLat()  {
         LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        double latitude = location.getLatitude();
-        return latitude;
+        return location.getLatitude();
     }
 
     public double getLong()  {
         LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        double longitude = location.getLongitude();
-        return longitude;
+        return location.getLongitude();
     }
 }
