@@ -13,13 +13,19 @@
         android:name="com.google.android.gms.maps.SupportMapFragment" />
 
     <Button
-        android:id="@+id/showCurrentLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right|bottom"
+        android:text="Save"
+        android:id="@+id/showCurrentLocation"
         android:onClick="showCurrentLocation"
-        android:text="@string/save_location_text"
-        android:layout_marginBottom="@android:dimen/app_icon_size"
-        android:layout_marginRight="@android:dimen/app_icon_size" />
+        android:layout_gravity="left|bottom" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remove"
+        android:id="@+id/removeParkingPin"
+        android:onClick="removeParkingPin"
+        android:layout_gravity="center_horizontal|bottom" />
 
 </FrameLayout>

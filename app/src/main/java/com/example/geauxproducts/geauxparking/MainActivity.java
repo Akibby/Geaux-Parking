@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity
                 mLocationClient = new GoogleApiClient.Builder(this).addApi(LocationServices.API)
                         .addConnectionCallbacks(this).addOnConnectionFailedListener(this).build();
                 mLocationClient.connect();
+
+                mMap.setMyLocationEnabled(true);
             } else {
                 Toast.makeText(this, "Map not Connected!", Toast.LENGTH_SHORT).show();
             }
@@ -184,9 +186,6 @@ public class MainActivity extends AppCompatActivity
                 removePins();
                 Toast.makeText(this, "You have removed all lot pins.", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.removeParkingPin:
-                removeParkingPin();
-                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -273,7 +272,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-      public void dropAllZoneParking() { //All Zone Pins
+    public void dropAllZoneParking() { //All Zone Pins
 
         for (int i = 0; i < AllZoneLat.length; i++) {
             mMap.addMarker(new MarkerOptions().position(new LatLng(AllZoneLat[i], AllZoneLong[i])).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
@@ -288,7 +287,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void removeParkingPin() {
+    public void removeParkingPin(View view) {
 
         if(locationMarkerOptions != null){
             marker.remove();
@@ -302,7 +301,7 @@ public class MainActivity extends AppCompatActivity
 
     public void findClosestCommuterLot() {
         int index = findShortestDistance(Zone1Lat, Zone1Long);
-            mMap.addMarker(new MarkerOptions().position(new LatLng(Zone1Lat[index], Zone1Long[index])).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(Zone1Lat[index], Zone1Long[index])).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
     }
 
     public void findClosestGreekLot() {
@@ -342,7 +341,7 @@ public class MainActivity extends AppCompatActivity
             for (int i = 0; i < Lat.length; i++) {
 
                 double testingDistance = 3959 * (2 * Math.atan2(Math.sqrt(((Math.sin((latLng.latitude - Lat[i]) / 2)) * (Math.sin((latLng.latitude - Lat[i]) / 2)) + Math.cos(Lat[i]) *
-                        Math.cos(latLng.latitude) * (Math.sin((latLng.longitude - Long[i]) / 2)) * (Math.sin((latLng.longitude - Long[i]) / 2)))),
+                                Math.cos(latLng.latitude) * (Math.sin((latLng.longitude - Long[i]) / 2)) * (Math.sin((latLng.longitude - Long[i]) / 2)))),
                         Math.sqrt(1 - ((Math.sin((latLng.latitude - Lat[i]) / 2)) * (Math.sin((latLng.latitude - Lat[i]) / 2)) + Math.cos(Lat[i])
                                 * Math.cos(latLng.latitude) * (Math.sin((latLng.longitude - Long[i]) / 2)) * (Math.sin((latLng.longitude - Long[i]) / 2))))));
 
@@ -352,8 +351,8 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         }
-            return index;
-        }
+        return index;
+    }
 
     @Override
     protected void onStart() {
