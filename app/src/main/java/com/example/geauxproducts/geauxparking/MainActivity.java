@@ -183,7 +183,6 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.removeParkingPin:
                 removeParkingPin();
-                Toast.makeText(this, "You have removed your parking location.", Toast.LENGTH_SHORT).show();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -286,8 +285,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void removeParkingPin() {
-        marker.remove();
-        locationMarkerOptions = null;
+        if(locationMarkerOptions != null){
+            marker.remove();
+            locationMarkerOptions = null;
+            Toast.makeText(this, "You have removed your parking location.", Toast.LENGTH_SHORT).show();
+        }
+        else
+            Toast.makeText(this, "There is no Parking Pin to remove", Toast.LENGTH_SHORT).show();
+
     }
 
     public void findClosestCommuterLot() {
