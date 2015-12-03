@@ -177,9 +177,8 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(this, "All Zones Parking", Toast.LENGTH_SHORT).show();
                 findClosestAllZonesLot();
                 break;
-            case R.id.removeAllPins:
+            case R.id.removeLotPins:
                 removePins();
-                Toast.makeText(this, "You have removed all pins.", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.removeParkingPin:
                 removeParkingPin();
@@ -282,16 +281,18 @@ public class MainActivity extends AppCompatActivity
         if (locationMarkerOptions != null) {
             marker = mMap.addMarker(locationMarkerOptions);
         }
+
     }
 
     public void removeParkingPin() {
+
         if(locationMarkerOptions != null){
             marker.remove();
             locationMarkerOptions = null;
             Toast.makeText(this, "You have removed your parking location.", Toast.LENGTH_SHORT).show();
         }
         else
-            Toast.makeText(this, "There is no Parking Pin to remove", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "There is no Parking Pin to remove.", Toast.LENGTH_SHORT).show();
 
     }
 
