@@ -196,32 +196,19 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void dropZone1Pin(){//Commuter Pins
+    double []Zone1Lat = {30.406355,30.408178,30.404483,30.405076,30.405696,30.403947,30.407241,30.409231,30.410378,30.411747,30.410748,
+            30.411969, 30.411701, 30.412395,30.413080, 30.415273, 30.415837,30.417650,30.417075,30.419498, 30.419961, 30.420109,30.419322};
 
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.406355, -91.172724)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.408178, -91.175278)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.404483, -91.174721)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.405076, -91.176995)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.405696, -91.180021)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.403947, -91.181614)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.407241, -91.184114)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.409231, -91.185101)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.410378, -91.184736)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.411747, -91.185755)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.410748, -91.187279)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.411969, -91.192472)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.411701, -91.191249)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.412395, -91.187472)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.413080, -91.187848)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.415273, -91.186882)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.415837, -91.186431)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.417650, -91.185755)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.417075, -91.180777)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.419498, -91.182545)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.419961, -91.183521)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.420109, -91.180710)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.419322, -91.180678)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-    }
+    double []Zone1Long = { -91.172724, -91.175278, -91.174721, -91.176995, -91.180021, -91.181614, -91.184114, -91.185101, -91.184736
+            , -91.185755, -91.187279, -91.192472, -91.191249, -91.187472, -91.187848, -91.186882, -91.186431, -91.185755, -91.180777, -91.182545, -91.183521
+            , -91.180710, -91.180678};
+
+
+    public void dropZone1Pin(){//Commuter Pins
+        for(int i = 0; i<Zone1Lat.length;i++){
+            mMap.addMarker(new MarkerOptions().position(new LatLng(Zone1Lat[i],Zone1Long[i])).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+        }
+ }
 
     public void dropZone2Pin(){ //Greek Pins
 
@@ -320,5 +307,30 @@ public class MainActivity extends AppCompatActivity
     public void removeParkingPin(){
         marker.remove();
         locationMarkerOptions = null;
+    }
+
+    public void calculate(View view){
+        Location currentLocation = LocationServices.FusedLocationApi.getLastLocation(mLocationClient);
+        if (currentLocation == null) {
+            Toast.makeText(this, "Couldn't Connect!", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+            double d = 1000000000;
+            double lat1 = 0;
+            double lon1 = 0;
+            for (int i = 0; i < Zone1Lat.length; i++) {
+                double dlon = latLng.longitude - Zone1Long[i];
+                double dlat = latLng.latitude - Zone1Lat[i];
+                double test = (Math.sin(dlat / 2)) * (Math.sin(dlat / 2)) + Math.cos(Zone1Lat[i]) * Math.cos(latLng.latitude) * (Math.sin(dlon / 2)) * (Math.sin(dlon / 2));
+                double distance = 3959 * (2 * Math.atan2(Math.sqrt(test), Math.sqrt(1 - test)));
+                if (distance < d) {
+                    d = distance;
+                    lat1 = Zone1Lat[i];
+                    lon1 = Zone1Long[i];
+                }
+            }
+            mMap.addMarker(new MarkerOptions().position(new LatLng(lat1, lon1)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+        }
     }
 }
