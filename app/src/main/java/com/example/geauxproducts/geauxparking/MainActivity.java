@@ -182,6 +182,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.removeLotPins:
                 removePins();
+                Toast.makeText(this, "You have removed all lot pins.", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.removeParkingPin:
                 removeParkingPin();
@@ -208,28 +209,13 @@ public class MainActivity extends AppCompatActivity
 
     double[] Zone1Lat = {30.406355, 30.408178, 30.404483, 30.405076, 30.405696, 30.403947, 30.407241, 30.409231, 30.410378, 30.411747, 30.410748,
             30.411969, 30.411701, 30.412395, 30.413080, 30.415273, 30.415837, 30.417650, 30.417075, 30.419498, 30.419961, 30.420109, 30.419322};
-
     double[] Zone1Long = {-91.172724, -91.175278, -91.174721, -91.176995, -91.180021, -91.181614, -91.184114, -91.185101, -91.184736
             , -91.185755, -91.187279, -91.192472, -91.191249, -91.187472, -91.187848, -91.186882, -91.186431, -91.185755, -91.180777, -91.182545, -91.183521
             , -91.180710, -91.180678};
 
 
-    public void dropZone1Pin() {//Commuter Pins
-        for (int i = 0; i < Zone1Lat.length; i++) {
-            mMap.addMarker(new MarkerOptions().position(new LatLng(Zone1Lat[i], Zone1Long[i])).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        }
-    }
-
-
     double[] Zone2Lat = {30.416519, 30.416602, 30.415742, 30.410662, 30.409528};
     double[] Zone2Long = {-91.174509, -91.172728, -91.169981, -91.168029, -91.170009};
-
-    public void dropZone2Pin() { //Greek Pins
-
-        for (int i = 0; i < Zone2Lat.length; i++) {
-            mMap.addMarker(new MarkerOptions().position(new LatLng(Zone2Lat[i], Zone2Long[i])).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
-        }
-    }
 
 
     double[] Zone3Lat = {30.416954, 30.417379, 30.418684, 30.419498, 30.419961, 30.420109, 30.419322, 30.408108, 30.408779, 30.409528,
@@ -238,15 +224,40 @@ public class MainActivity extends AppCompatActivity
             -91.171313, -91.171533, -91.172487, -91.174247
             , -91.175475, -91.175202, -91.173641, -91.171892};
 
+
+    double[] Zone4Lat = {30.413974, 30.415103, 30.415626, 30.415742};
+    double[] Zone4Long = {-91.174236, -91.174209, -91.173346, -91.169981};
+
+
+    double[] VisitorLat = {30.414007, 30.412930, 30.415488, 30.416080, 30.413318, 30.412633, 30.409893, 30.407607, 30.406809, 30.406410, 30.408739};
+    double[] VisitorLong = {-91.175454, -91.174712, -91.178500, -91.177094, -91.184347, -91.185216, -91.183525, -91.181208, -91.179649, -91.179971, -91.175234};
+
+
+    double[] AllZoneLat = {30.405691, 30.406585, 30.405448, 30.404237, 30.407008, 30.406114, 30.406650, 30.409649, 30.406000, 30.411968, 30.412025, 30.413309, 30.417964,
+            30.406102, 30.420241, 30.411003, 30.411336, 30.412904, 30.412709, 30.417235, 30.418429};
+    double[] AllZoneLong = {-91.186789, -91.186195, -91.185338, -91.186836, -91.188795, -91.189700, -91.192875, -91.195108, -91.198207
+            , -91.194369, -91.188999, -91.189574, -91.192645, -91.182273, -91.178700, -91.170437, -91.170117, -91.171040, -91.169194, -91.170541, -91.171069};
+
+
+    public void dropZone1Pin() {//Commuter Pins
+        for (int i = 0; i < Zone1Lat.length; i++) {
+            mMap.addMarker(new MarkerOptions().position(new LatLng(Zone1Lat[i], Zone1Long[i])).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+        }
+    }
+
+    public void dropZone2Pin() { //Greek Pins
+
+        for (int i = 0; i < Zone2Lat.length; i++) {
+            mMap.addMarker(new MarkerOptions().position(new LatLng(Zone2Lat[i], Zone2Long[i])).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
+        }
+    }
+
     public void dropZone3Pin() { //Resident Pins
 
         for (int i = 0; i < Zone3Lat.length; i++) {
             mMap.addMarker(new MarkerOptions().position(new LatLng(Zone3Lat[i], Zone3Long[i])).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         }
     }
-
-    double[] Zone4Lat = {30.413974, 30.415103, 30.415626, 30.415742};
-    double[] Zone4Long = {-91.174236, -91.174209, -91.173346, -91.169981};
 
     public void dropZone4Pin() { //Law Pins
 
@@ -255,9 +266,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    double[] VisitorLat = {30.414007, 30.412930, 30.415488, 30.416080, 30.413318, 30.412633, 30.409893, 30.407607, 30.406809, 30.406410, 30.408739};
-    double[] VisitorLong = {-91.175454, -91.174712, -91.178500, -91.177094, -91.184347, -91.185216, -91.183525, -91.181208, -91.179649, -91.179971, -91.175234};
-
     public void dropVisitorParking() { //Visitor Pins
 
         for (int i = 0; i < VisitorLat.length; i++) {
@@ -265,13 +273,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    double[] AllZoneLat = {30.405691, 30.406585, 30.405448, 30.404237, 30.407008, 30.406114, 30.406650, 30.409649, 30.406000, 30.411968, 30.412025, 30.413309, 30.417964,
-            30.406102, 30.420241, 30.411003, 30.411336, 30.412904, 30.412709, 30.417235, 30.418429};
-
-    double[] AllZoneLong = {-91.186789, -91.186195, -91.185338, -91.186836, -91.188795, -91.189700, -91.192875, -91.195108, -91.198207
-            , -91.194369, -91.188999, -91.189574, -91.192645, -91.182273, -91.178700, -91.170437, -91.170117, -91.171040, -91.169194, -91.170541, -91.171069};
-
-    public void dropAllZoneParking() { //All Zone Pins
+      public void dropAllZoneParking() { //All Zone Pins
 
         for (int i = 0; i < AllZoneLat.length; i++) {
             mMap.addMarker(new MarkerOptions().position(new LatLng(AllZoneLat[i], AllZoneLong[i])).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
@@ -284,7 +286,6 @@ public class MainActivity extends AppCompatActivity
         if (locationMarkerOptions != null) {
             marker = mMap.addMarker(locationMarkerOptions);
         }
-
     }
 
     public void removeParkingPin() {
@@ -297,7 +298,6 @@ public class MainActivity extends AppCompatActivity
         }
         else
             Toast.makeText(this, "There is no Parking Pin to remove.", Toast.LENGTH_SHORT).show();
-
     }
 
     public void findClosestCommuterLot() {
@@ -337,18 +337,17 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, "Couldn't Connect!", Toast.LENGTH_SHORT).show();
         } else {
             LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-            double d = 1000000000;
-            double lat1 = 0;
-            double lon1 = 0;
+            double distance = 1000000000;
+
             for (int i = 0; i < Lat.length; i++) {
-                double dlon = latLng.longitude - Long[i];
-                double dlat = latLng.latitude - Lat[i];
-                double test = (Math.sin(dlat / 2)) * (Math.sin(dlat / 2)) + Math.cos(Lat[i]) * Math.cos(latLng.latitude) * (Math.sin(dlon / 2)) * (Math.sin(dlon / 2));
-                double distance = 3959 * (2 * Math.atan2(Math.sqrt(test), Math.sqrt(1 - test)));
-                if (distance < d) {
-                    d = distance;
-                    lat1 = Lat[i];
-                    lon1 = Long[i];
+
+                double testingDistance = 3959 * (2 * Math.atan2(Math.sqrt(((Math.sin((latLng.latitude - Lat[i]) / 2)) * (Math.sin((latLng.latitude - Lat[i]) / 2)) + Math.cos(Lat[i]) *
+                        Math.cos(latLng.latitude) * (Math.sin((latLng.longitude - Long[i]) / 2)) * (Math.sin((latLng.longitude - Long[i]) / 2)))),
+                        Math.sqrt(1 - ((Math.sin((latLng.latitude - Lat[i]) / 2)) * (Math.sin((latLng.latitude - Lat[i]) / 2)) + Math.cos(Lat[i])
+                                * Math.cos(latLng.latitude) * (Math.sin((latLng.longitude - Long[i]) / 2)) * (Math.sin((latLng.longitude - Long[i]) / 2))))));
+
+                if (testingDistance < distance) {
+                    distance = testingDistance;
                     index = i;
                 }
             }
