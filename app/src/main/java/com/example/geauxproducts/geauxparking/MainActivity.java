@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity
     private static final int ERROR_DIALOG_REQUEST = 9001;
     private GoogleApiClient mLocationClient;
     private Marker marker;
+    private Marker parkingLocation;
     private MarkerOptions locationMarkerOptions;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
@@ -55,7 +56,8 @@ public class MainActivity extends AppCompatActivity
         if(Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
-            } else {
+            }
+            else {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_ASK_PERMISSIONS);
             }
         }
@@ -123,7 +125,7 @@ public class MainActivity extends AppCompatActivity
             }
 
             locationMarkerOptions = new MarkerOptions().position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-            marker = mMap.addMarker(locationMarkerOptions);
+            parkingLocation = mMap.addMarker(locationMarkerOptions);
             //addMarker(currentLocation.getLatitude(), currentLocation.getLongitude());
 
         }
@@ -168,10 +170,13 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.removeAllPins:
                 removePins();
-                Toast.makeText(this, "You Have Removed All Pins", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "You have removed all pins.", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.removeParkingPin:
+                removeParkingPin();
+                Toast.makeText(this, "You have removed your parking location.", Toast.LENGTH_SHORT).show();
                 break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -257,7 +262,7 @@ public class MainActivity extends AppCompatActivity
         mMap.addMarker(new MarkerOptions().position(new LatLng(30.413974, -91.174236)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
         mMap.addMarker(new MarkerOptions().position(new LatLng(30.415103, -91.174209)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
         mMap.addMarker(new MarkerOptions().position(new LatLng(30.415626, -91.173346)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(30.415742, -91.169981)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));;
+        mMap.addMarker(new MarkerOptions().position(new LatLng(30.415742, -91.169981)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
 
     }
 
@@ -312,5 +317,9 @@ public class MainActivity extends AppCompatActivity
         }
 
         //addMarker(location.getPosition().latitude, location.getPosition().longitude);
+    }
+
+    public void removeParkingPin(){
+        parkingLocation = null;
     }
 }

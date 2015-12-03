@@ -9,4 +9,5 @@
     <string name="allZoneParking">All Zones</string>
     <string name="current_location">Current Location</string>
     <string name="removeAllPins">Remove Pins</string>
+    <string name="removeParkingPin">Remove Parking Pin</string>
 </resources>
