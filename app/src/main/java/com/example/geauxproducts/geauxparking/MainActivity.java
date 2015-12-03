@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity
     GoogleMap mMap;
     private static final int ERROR_DIALOG_REQUEST = 9001;
     private GoogleApiClient mLocationClient;
-    private Marker marker;
-    private Marker parkingLocation;
+    public Marker marker;
+    public Marker parkingLocation;
     private MarkerOptions locationMarkerOptions;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
@@ -54,10 +54,7 @@ public class MainActivity extends AppCompatActivity
         //setContentView(R.layout.activity_main);
 
         if(Build.VERSION.SDK_INT >= 23) {
-            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-
-            }
-            else {
+            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_ASK_PERMISSIONS);
             }
         }
@@ -125,12 +122,15 @@ public class MainActivity extends AppCompatActivity
             }
 
             locationMarkerOptions = new MarkerOptions().position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-            parkingLocation = mMap.addMarker(locationMarkerOptions);
+            marker = mMap.addMarker(locationMarkerOptions);
             //addMarker(currentLocation.getLatitude(), currentLocation.getLongitude());
 
         }
-
+//        locationMarkerOptions.addListener("dblclick", function() {
+//            marker.setMap(null);
+//        }
     }
+
 
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -313,13 +313,12 @@ public class MainActivity extends AppCompatActivity
 
         mMap.clear();
         if (locationMarkerOptions != null) {
-            mMap.addMarker(locationMarkerOptions);
+            marker = mMap.addMarker(locationMarkerOptions);
         }
-
-        //addMarker(location.getPosition().latitude, location.getPosition().longitude);
     }
 
     public void removeParkingPin(){
-        parkingLocation = null;
+        marker.remove();
+        locationMarkerOptions = null;
     }
 }
