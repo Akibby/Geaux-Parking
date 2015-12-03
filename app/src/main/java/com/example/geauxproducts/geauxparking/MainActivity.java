@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity
     private static final int ERROR_DIALOG_REQUEST = 9001;
     private GoogleApiClient mLocationClient;
     private Marker marker;
+    private MarkerOptions locationMarkerOptions;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
     @Override
@@ -106,7 +107,6 @@ public class MainActivity extends AppCompatActivity
         mMap.moveCamera(update);
     }
 
-    public static Marker location;
     public void showCurrentLocation(View view) {
         Location currentLocation = LocationServices.FusedLocationApi.getLastLocation(mLocationClient);
         if (currentLocation == null) {
@@ -122,16 +122,12 @@ public class MainActivity extends AppCompatActivity
                 marker.remove();
             }
 
-            location = mMap.addMarker(new MarkerOptions().position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())));
-            addMarker(currentLocation.getLatitude(), currentLocation.getLongitude());
+            locationMarkerOptions = new MarkerOptions().position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+            marker = mMap.addMarker(locationMarkerOptions);
+            //addMarker(currentLocation.getLatitude(), currentLocation.getLongitude());
 
         }
 
-    }
-
-    private void addMarker(double lat, double lng) {
-        MarkerOptions options = new MarkerOptions().position(new LatLng(lat, lng)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-        marker = mMap.addMarker(options);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -311,6 +307,9 @@ public class MainActivity extends AppCompatActivity
     public void removePins(){
 
         mMap.clear();
+        if (locationMarkerOptions != null) {
+            mMap.addMarker(locationMarkerOptions);
+        }
 
         //addMarker(location.getPosition().latitude, location.getPosition().longitude);
     }
