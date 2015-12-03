@@ -34,6 +34,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -44,14 +51,13 @@ public class MainActivity extends AppCompatActivity
     private static final int ERROR_DIALOG_REQUEST = 9001;
     private GoogleApiClient mLocationClient;
     public Marker marker;
-    public Marker parkingLocation;
     private MarkerOptions locationMarkerOptions;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
+
 
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -120,12 +126,9 @@ public class MainActivity extends AppCompatActivity
 
             locationMarkerOptions = new MarkerOptions().position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
             marker = mMap.addMarker(locationMarkerOptions);
-            //addMarker(currentLocation.getLatitude(), currentLocation.getLongitude());
 
         }
-//        locationMarkerOptions.addListener("dblclick", function() {
-//            marker.setMap(null);
-//        }
+
     }
 
 
@@ -289,6 +292,7 @@ public class MainActivity extends AppCompatActivity
         if(locationMarkerOptions != null){
             marker.remove();
             locationMarkerOptions = null;
+            deleteFile("data");
             Toast.makeText(this, "You have removed your parking location.", Toast.LENGTH_SHORT).show();
         }
         else
@@ -351,5 +355,87 @@ public class MainActivity extends AppCompatActivity
         }
             return index;
         }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        try {
+            readDataFile();
+        } catch (IOException e) {
+        } catch (JSONException e) {
+        }
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        try {
+            if(locationMarkerOptions != null) {
+                createDataFile();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createDataFile() throws  IOException, JSONException {
+        JSONArray data = new JSONArray();
+        JSONObject currentLoc;
+
+        currentLoc = new JSONObject();
+
+        double latitude = locationMarkerOptions.getPosition().latitude;
+        double longitude = locationMarkerOptions.getPosition().longitude;
+
+        currentLoc.put("Latitude", latitude);
+        currentLoc.put("Longitude", longitude);
+        data.put(currentLoc);
+
+        String text = data.toString();
+
+        FileOutputStream fos = openFileOutput("data", MODE_PRIVATE);
+        fos.write(text.getBytes());
+        fos.close();
+
+    }
+
+    public void readDataFile() throws IOException, JSONException {
+
+        FileInputStream fis = openFileInput("data");
+        BufferedInputStream bis = new BufferedInputStream(fis);
+        StringBuffer b = new StringBuffer();
+        while(bis.available() != 0) {
+            char c = (char) bis.read();
+            b.append(c);
+        }
+
+        bis.close();
+        fis.close();
+
+        JSONArray data = new JSONArray(b.toString());
+
+
+        for(int i = 0; i < data.length(); i++) {
+            double latitude = data.getJSONObject(i).getDouble("Latitude");
+            double longitude = data.getJSONObject(i).getDouble("Longitude");
+
+            LatLng latLng = new LatLng(latitude, longitude);
+            CameraUpdate update = CameraUpdateFactory.newLatLngZoom(latLng, 15);
+            mMap.animateCamera(update);
+
+
+            if (marker != null) {
+                marker.remove();
+            }
+
+            locationMarkerOptions = new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+            marker = mMap.addMarker(locationMarkerOptions);
+        }
+
+    }
+}
 
