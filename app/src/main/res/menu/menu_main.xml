@@ -19,8 +19,8 @@
         android:id="@+id/allZoneParking"
         android:title="@string/allZoneParking" />
     <item
-        android:id="@+id/removeAllPins"
-        android:title="@string/removeAllPins" />
+        android:id="@+id/removeLotPins"
+        android:title="@string/removeLotPins" />
     <item
         android:id="@+id/removeParkingPin"
         android:title="@string/removeParkingPin" />
